@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<a href="/" class="btn btn-warning home">Home</a>
+<a href="/live" class="btn btn-info refresh">Refresh</a>
+
+<table class="world">
+    {% for i in range(gameoflife.world|length) %}
+        <tr>
+            {% for j in range(gameoflife.world[0]|length) %}
+                {% if gameoflife.world[i][j] %}
+                    <td class="cell living-cell"></td>
+                {% else %}
+                    {% if not gameoflife.old_world[i][j] %}
+                        <td class="cell"></td>
+                    {% else %}
+                        <td class="dead-cell"></td>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+<div class="counter">
+    {{ gameoflife.counter }}
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        setInterval(() => window.location.reload(), 1000);
+    </script>
+{% endblock %}
+
